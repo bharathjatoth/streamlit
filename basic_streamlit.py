@@ -13,7 +13,7 @@ class StreamHandler(BaseCallbackHandler):
         self.container.markdown(self.text)
 
 with st.sidebar:
-    open_ai_key = st.text_input("Please enter a valid OPEN_AI_KEY",type="password")
+    open_api_key = st.text_input("Please enter a valid OPEN_AI_KEY",type="password")
 
 if "messages" not in st.session_state:
     st.session_state['messages'] = [ChatMessage(role="Assistant",content="Hi I am your new assistant")]
@@ -25,12 +25,12 @@ if prompt:= st.chat_input():
     st.session_state.messages.append(ChatMessage(role='User',content='prompt'))
     st.chat_message("user").write(prompt)
 
-    if not open_ai_key:
+    if not open_api_key:
         st.info("please enter a valid open api key")
         st.stop()
 
     with st.chat_message('assistant'):
         streamhandler = StreamHandler(st.empty())
-        llm = ChatOpenAI(open_api_key=open_ai_key,streaming=True,callbacks=[streamhandler])
+        llm = ChatOpenAI(open_api_key=open_api_key,streaming=True,callbacks=[streamhandler])
         response = llm(st.session_state.messages)
         st.session_state.messages.append(ChatMessage(role="Assistant",content=response.content))
