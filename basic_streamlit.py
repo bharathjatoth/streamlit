@@ -16,13 +16,13 @@ with st.sidebar:
     open_api_key = st.text_input("OPENAI API KEY",type="password")
 
 if "messages" not in st.session_state:
-    st.session_state['messages'] = [ChatMessage(role="Assistant",content="Hi I am your new assistant")]
+    st.session_state['messages'] = [ChatMessage(role="assistant",content="Hi I am your new assistant")]
 
 for msg in st.session_state.messages:
     st.chat_message(msg.role).write(msg.content)
 
 if prompt:= st.chat_input():
-    st.session_state.messages.append(ChatMessage(role='User',content=prompt))
+    st.session_state.messages.append(ChatMessage(role='user',content=prompt))
     st.chat_message("user").write(prompt)
 
     if not open_api_key:
